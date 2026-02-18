@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const initModels = require('./init-models');
 
-// Configuramos la conexión usando tus variables de entorno
+// Configuramos la conexión usando las variables de entorno
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
