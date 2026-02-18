@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const Controllers = require('../controllers/controllers');
 
 const router = Router();
 
@@ -6,6 +7,9 @@ const router = Router();
 router.get('/', (req, res) => {
     res.send(`<h1>Inicio de prueba tecnica</h1>`);
 });
+
+// Ruta para crear vehiculo
+router.post('/insertar-vehiculo', Controllers.insertarVehiculo);
 
 module.exports = router;
 
