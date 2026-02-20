@@ -11,5 +11,8 @@ router.get('/', (req, res) => {
 // Ruta para crear vehiculo
 router.post('/insertar-vehiculo', Controllers.insertarVehiculo);
 
+// Ruta para traer vehiculos
+router.get('/lista-vehiculos', Controllers.listaVehiculos);
+
 module.exports = router;
 

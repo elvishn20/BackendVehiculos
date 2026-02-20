@@ -10,6 +10,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/', routes)
 
+// Prueba de conexion
 app.listen(PORT, () => {
     console.log(`Aplicacion funcional ${PORT}`);
 

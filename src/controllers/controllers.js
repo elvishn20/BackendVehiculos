@@ -35,6 +35,19 @@ insertarVehiculo = async (req, res) => {
     };
 };
 
+// Logica para traer la lista de vehiculos
+const listaVehiculos = async (req, res) => {
+    try {
+        const queryResult = await db.query(
+            'SELECT * FROM public.traer_vehiculos()'
+        );
+        res.status(200).json({success: true, data: queryResult.rows})
+    } catch (error) {
+        res.status(500).json({success: false, message: error.message})
+    };
+};
+
 module.exports = {
     insertarVehiculo,
+    listaVehiculos,
 }
