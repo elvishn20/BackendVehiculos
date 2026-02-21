@@ -14,5 +14,8 @@ router.post('/insertar-vehiculo', Controllers.insertarVehiculo);
 // Ruta para traer vehiculos
 router.get('/lista-vehiculos', Controllers.listaVehiculos);
 
+// Ruta para actualizar vehiculos
+router.put('/editar-vehiculo', Controllers.editarVehiculo);
+
 module.exports = router;
 

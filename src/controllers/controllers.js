@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 // Logica para la insercion del vehiculo
-insertarVehiculo = async (req, res) => {
+const insertarVehiculo = async (req, res) => {
     try {
         const {
             pr_placa,
@@ -22,9 +22,9 @@ insertarVehiculo = async (req, res) => {
 
         const {resultado, mensaje} = queryResult.rows[0];
         if (resultado === 1) {
-            res.status(200).json({message: mensaje});
+            res.status(200).json({success: true, message: mensaje});
         } else {
-            res.status(400).json({message: mensaje});
+            res.status(400).json({success: false, message: mensaje});
         };
     } catch (error) {
         console.error('Error detallado:', error);
@@ -47,7 +47,45 @@ const listaVehiculos = async (req, res) => {
     };
 };
 
+// Logica para actualizar el vehiculo
+const editarVehiculo = async (req, res) => {
+    try {
+        const {
+            pr_id,
+            pr_placa,
+            pr_marca,
+            pr_modelo
+        } = req.body;
+
+        const queryResult = await db.query(
+            'CALL public.actualizar_vehiculo($1, $2, $3, $4, $5, $6)',
+            [
+                pr_id,
+                pr_placa,
+                pr_marca,
+                pr_modelo,
+                null,
+                null
+            ],
+        );
+
+        const {resultado, mensaje} = queryResult.rows[0];
+        if (resultado === 1) {
+            res.status(200).json({success: true, message: mensaje});
+        } else {
+            res.status(400).json({success: false, message: mensaje});
+        }
+    } catch (error) {
+        console.error('Error detallado: ', error);
+        res.status(500).json({
+            message: 'Error interno del servidor:',
+            error: error.message
+        });
+    };
+};
+
 module.exports = {
     insertarVehiculo,
     listaVehiculos,
+    editarVehiculo
 }
