@@ -17,5 +17,8 @@ router.get('/lista-vehiculos', Controllers.listaVehiculos);
 // Ruta para actualizar vehiculos
 router.put('/editar-vehiculo', Controllers.editarVehiculo);
 
+// Ruta para eliminar vehiculos
+router.delete('/eliminar-vehiculo/:idVehiculo', Controllers.eliminarVehiculo);
+
 module.exports = router;
 

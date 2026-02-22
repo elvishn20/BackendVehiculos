@@ -84,8 +84,39 @@ const editarVehiculo = async (req, res) => {
     };
 };
 
+// Logica para eliminar vehiculo
+const eliminarVehiculo = async (req, res) => {
+    try {
+        const {idVehiculo} = req.params
+
+        const queryResult = await db.query(
+            'CALL public.borrar_vehiculo($1, $2, $3)',
+            [
+                idVehiculo,
+                null,
+                null
+            ],
+        );
+        
+        const {resultado, mensaje} = queryResult.rows[0];
+        if (resultado === 1) {
+            res.status(200).json({success: true, message: mensaje});
+        } else {
+            res.status(400).json({success: false, message: mensaje});
+        }
+    } catch (error) {
+        console.error('Error detallado: ', error)
+        res.status(500).json({
+            message: 'Error interno del servidor',
+            error: error.message
+        })
+    }
+
+}
+
 module.exports = {
     insertarVehiculo,
     listaVehiculos,
-    editarVehiculo
+    editarVehiculo,
+    eliminarVehiculo
 }
