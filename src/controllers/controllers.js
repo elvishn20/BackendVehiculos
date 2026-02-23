@@ -114,9 +114,50 @@ const eliminarVehiculo = async (req, res) => {
 
 }
 
+// Logica para crear entrada o salida
+const insertarMovimiento = async (req, res) => {
+    try {
+        const {
+            pr_id_vehiculo,
+            pr_tipo_movimiento,
+            pr_nombre_motorista,
+            pr_fecha,
+            pr_hora,
+            pr_kilometraje
+        } = req.body
+
+        const queryResult = await db.query(
+            'CALL public.crear_movimiento ($1, $2, $3, $4, $5, $6, $7, $8)',
+            [
+                pr_id_vehiculo,
+                pr_tipo_movimiento,
+                pr_nombre_motorista,
+                pr_fecha,
+                pr_hora,
+                pr_kilometraje,
+                null,
+                null
+            ],
+        );
+        const {resultado, mensaje} = queryResult.rows[0];
+        if (resultado === 1) {
+            res.status(200).json({success: true, message: mensaje});
+        } else {
+            res.status(400).json({success: false, message: mensaje});
+        }
+    } catch (error) {
+        console.error('Error detallado: ', error);
+        res.status(500).json({
+            message: 'Error interno del servidor',
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     insertarVehiculo,
     listaVehiculos,
     editarVehiculo,
-    eliminarVehiculo
+    eliminarVehiculo,
+    insertarMovimiento
 }

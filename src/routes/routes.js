@@ -20,5 +20,8 @@ router.put('/editar-vehiculo', Controllers.editarVehiculo);
 // Ruta para eliminar vehiculos
 router.delete('/eliminar-vehiculo/:idVehiculo', Controllers.eliminarVehiculo);
 
+// Ruta para crear una entrada o salida
+router.post('/insertar-movimiento', Controllers.insertarMovimiento);
+
 module.exports = router;
 
