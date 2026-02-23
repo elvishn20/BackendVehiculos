@@ -41,9 +41,11 @@ const listaVehiculos = async (req, res) => {
         const queryResult = await db.query(
             'SELECT * FROM public.traer_vehiculos()'
         );
-        res.status(200).json({success: true, data: queryResult.rows})
+        // Esto convierte [{traer_vehiculos: {...}}] en [{...}]
+        const datosLimpios = queryResult.rows.map(row => row.traer_vehiculos);
+        res.status(200).json({success: true, data: datosLimpios});
     } catch (error) {
-        res.status(500).json({success: false, message: error.message})
+        res.status(500).json({success: false, message: error.message});
     };
 };
 
@@ -111,7 +113,6 @@ const eliminarVehiculo = async (req, res) => {
             error: error.message
         })
     }
-
 }
 
 // Logica para crear entrada o salida
@@ -154,10 +155,25 @@ const insertarMovimiento = async (req, res) => {
     }
 }
 
+// Logica para traer los datos de las entradas y salidas
+const listaMovimientos = async (req, res) => {
+    try {
+        const queryResult = await db.query(
+            'SELECT * FROM public.traer_movimientos()'
+        );
+        // Esto convierte [{traer_movimientos: {...}}] en [{...}]
+        const datosLimpios = queryResult.rows.map(row => row.traer_movimientos);
+        res.status(200).json({ success: true, data: datosLimpios });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message});
+    };
+};
+
 module.exports = {
     insertarVehiculo,
     listaVehiculos,
     editarVehiculo,
     eliminarVehiculo,
-    insertarMovimiento
-}
+    insertarMovimiento,
+    listaMovimientos
+};
